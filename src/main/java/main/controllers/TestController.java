@@ -1,5 +1,6 @@
 package main.controllers;
 
+import main.jms.producers.TestProducer;
 import main.services.SenderResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +25,10 @@ public class TestController {
     @Autowired
     @Qualifier("javaMailSenderImpl")
     private JavaMailSenderImpl javaMailSender;
-
     @Autowired
     private SenderResolver senderResolver;
+    @Autowired
+    private TestProducer testProducer;
 
     @GetMapping(value = "/check")
     @CrossOrigin(origins = "http://localhost:4200")
@@ -36,11 +38,8 @@ public class TestController {
 
     @GetMapping(value = "/send/{position}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public void send(@PathVariable("position")String position) {
+    public boolean send(@PathVariable("position")String position) {
         try {
-            if (position == null) {
-                position = "0";
-            }
             senderResolver.resolveSender(javaMailSender, Integer.valueOf(position));
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
@@ -49,9 +48,17 @@ public class TestController {
             mimeMessageHelper.setSubject("Subject");
             mimeMessageHelper.setText("Text");
             javaMailSender.send(mimeMessage);
+            LOGGER.info("suc sended");
+            return true;
         } catch (MessagingException e) {
             LOGGER.error("Error");
+            return false;
         }
-        LOGGER.info("suc sended");
+    }
+
+    @GetMapping("/sendInMQ")
+    public void inMq() {
+        LOGGER.info("SEND");
+        testProducer.send();
     }
 }
