@@ -21,7 +21,6 @@ import java.util.List;
 @RestController
 public class TestController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestController.class);
-
     @Autowired
     @Qualifier("javaMailSenderImpl")
     private JavaMailSenderImpl javaMailSender;
