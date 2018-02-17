@@ -1,7 +1,15 @@
-.gradle/
-.idea/
-build/
-gradle/
-out/
-gradlew
-gradlew.bat
+**/target/
+/target/
+*/target/*
+.classpath
+.project
+.settings
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+*.iml
+*.idea
+*.properties
