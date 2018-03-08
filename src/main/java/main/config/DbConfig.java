@@ -13,8 +13,13 @@ import javax.persistence.EntityManagerFactory;
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = {"main.entities"})
 public class DbConfig {
+
+    private final EntityManagerFactory entityManagerFactory;
+
     @Autowired
-    private EntityManagerFactory entityManagerFactory;
+    public DbConfig(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
+    }
 
     @Bean
     public SessionFactory getSessionFactory() {
