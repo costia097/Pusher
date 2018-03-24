@@ -12,16 +12,16 @@ import java.util.Map;
 @Service
 public class SenderResolver {
 
-    private static Map<String, String> users = new HashMap<>();
+    private static Map<String, String> senders = new HashMap<>();
 
     @PostConstruct
     public void init() {
-        users.put("104kteam@gmail.com", "knedliks");
-        users.put("asdjjdadalvlf@gmail.com", "asdjjdadalvlf123");
+        senders.put("104kteam@gmail.com", "knedliks");
+        senders.put("asdjjdadalvlf@gmail.com", "asdjjdadalvlf123");
     }
 
     public void resolveSender(JavaMailSenderImpl javaMailSender, Integer position) {
-        List<Map.Entry<String, String>> listOfDb = new ArrayList<>(users.entrySet());
+        List<Map.Entry<String, String>> listOfDb = new ArrayList<>(senders.entrySet());
         Map.Entry<String, String> targetEntry = listOfDb.get(position);
         javaMailSender.setUsername(targetEntry.getKey());
         javaMailSender.setPassword(targetEntry.getValue());
