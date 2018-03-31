@@ -44,19 +44,11 @@ public class EmailService {
 
     public String createEmailContentForConfirmRegistration(String name, String email) {
         Optional<User> user = checkOrGetUser(email);
-        if (user.isPresent()) {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("Hello, ").append("dear ").append(name).append("Link:  ").append("http://localhost:8080/person/confirm/").append(user.get().getUuid());
-            return stringBuilder.toString();
-        } else {
-            return null;
-        }
+        return user.map(user1 -> "Hello, " + "dear " + name + "Link:  " + "http://localhost:8080/person/confirm/" + user1.getUuid()).orElse(null);
     }
 
     public String createEmailContentForForgotPassword(String name) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Hello, ").append("dear ").append(name).append("Link:  ").append("http://localhost:4200/updatePassword");
-        return stringBuilder.toString();
+        return "Hello, " + "dear " + name + "Link:  " + "http://localhost:4200/updatePassword";
     }
 
     private Optional<User> checkOrGetUser(String email) {

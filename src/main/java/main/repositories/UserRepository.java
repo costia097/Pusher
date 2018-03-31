@@ -45,22 +45,18 @@ public class UserRepository extends MainRepository {
         Session currentSession = getSessionFactory().getCurrentSession();
         Criteria criteria = currentSession.createCriteria(User.class);
         criteria.add(Restrictions.eq("uuid", userUuid));
-        User user = (User) criteria.uniqueResult();
-        return user;
+        return (User) criteria.uniqueResult();
     }
 
     public void mergeUser(User user) {
         getSessionFactory().getCurrentSession().merge(user);
     }
 
-    public List<User> findAllUsers(boolean loadAllData) {
+    @SuppressWarnings("unchecked")
+    public List<User> findAllUsers() {
         Session currentSession = getSessionFactory().getCurrentSession();
         Query fromUser = currentSession.createQuery("FROM User");
-        List<User> users = fromUser.list();
-        if (loadAllData) {
-            users.forEach(User::getRoles);
-        }
-        return users;
+        return (List<User>) fromUser.list();
     }
 
 }

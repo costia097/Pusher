@@ -75,7 +75,7 @@ public class UserService {
         userRepository.mergeUser(user);
     }
 
-    public List<User> findAllUsers(boolean loadAllData) {
-        return userRepository.findAllUsers(false);
+    public List<User> findAllUsers() {
+        return userRepository.findAllUsers();
     }
 }

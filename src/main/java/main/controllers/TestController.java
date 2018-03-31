@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -47,15 +45,13 @@ public class TestController {
 
     @GetMapping(value = "/check")
     @PreAuthorize("hasRole('ADMIN')")
-    public void check(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    public void check() {
         LOGGER.info("Auth");
     }
 
     @GetMapping(value = "/getData")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<String> getData(HttpServletRequest request) {
-        HttpServletRequest request1 = request;
+    public List<String> getData() {
         return Arrays.asList("Hello", "From", "Back", "!!!");
     }
 

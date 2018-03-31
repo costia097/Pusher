@@ -21,7 +21,7 @@ public class ServerController {
 
     @GetMapping("/getAllRegistrationData")
     public UsersLoginEmailDto resolveRegistrationData() {
-        List<User> allUsers = userService.findAllUsers(false);
+        List<User> allUsers = userService.findAllUsers();
         List<UsersLoginEmailDto.LoginEmailWrapper> result = allUsers.stream()
                 .map(user -> new UsersLoginEmailDto.LoginEmailWrapper(user.getLogin(), user.getEmail()))
                 .collect(Collectors.toList());
