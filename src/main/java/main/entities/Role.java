@@ -21,7 +21,7 @@ public class Role {
     @Enumerated(EnumType.STRING)
     private RoleStatus role;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 

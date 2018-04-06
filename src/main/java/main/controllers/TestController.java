@@ -30,18 +30,15 @@ import java.util.List;
 @CheckGood("aaa")
 public class TestController {
     private static final Logger LOGGER = LoggerFactory.getLogger(TestController.class);
-    private final JavaMailSenderImpl javaMailSender;
-    private final SenderResolver senderResolver;
-    private final TestProducer testProducer;
-    private final UserRepository userRepository;
-
     @Autowired
-    public TestController(@Qualifier("javaMailSenderImpl") JavaMailSenderImpl javaMailSender, SenderResolver senderResolver, TestProducer testProducer, UserRepository userRepository) {
-        this.javaMailSender = javaMailSender;
-        this.senderResolver = senderResolver;
-        this.testProducer = testProducer;
-        this.userRepository = userRepository;
-    }
+    @Qualifier("javaMailSenderImpl")
+    private JavaMailSenderImpl javaMailSender;
+    @Autowired
+    private  SenderResolver senderResolver;
+    @Autowired
+    private  TestProducer testProducer;
+    @Autowired
+    private  UserRepository userRepository;
 
     @GetMapping(value = "/check")
     @PreAuthorize("hasRole('ADMIN')")

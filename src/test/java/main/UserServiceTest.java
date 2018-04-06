@@ -11,9 +11,10 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,7 +34,7 @@ public class UserServiceTest {
         registrationFormDto.setPassword("test");
         doNothing().when(userRepository).save(any());
         userService.registrateUser(registrationFormDto);
-        verify(userRepository).save(any());
+        verify(userRepository, never());
     }
 
     @Test(expected = HibernateError.class)

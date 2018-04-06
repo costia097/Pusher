@@ -2,10 +2,14 @@ package main.repositories;
 
 import main.entities.User;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Restrictions;;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -44,6 +48,8 @@ public class UserRepository extends MainRepository {
     public User findUserByUuid(UUID userUuid) {
         Session currentSession = getSessionFactory().getCurrentSession();
         Criteria criteria = currentSession.createCriteria(User.class);
+        criteria.setFetchMode("addresses", FetchMode.JOIN);
+        criteria.setFetchMode("records", FetchMode.JOIN);
         criteria.add(Restrictions.eq("uuid", userUuid));
         return (User) criteria.uniqueResult();
     }
@@ -57,6 +63,16 @@ public class UserRepository extends MainRepository {
         Session currentSession = getSessionFactory().getCurrentSession();
         Query fromUser = currentSession.createQuery("FROM User");
         return (List<User>) fromUser.list();
+    }
+
+    @SuppressWarnings("unchecked")
+    public void select() {
+        String login = "awdawd";
+        final Session currentSession = getSessionFactory().getCurrentSession();
+        final SQLQuery sqlQuery = currentSession.createSQLQuery("SELECT * FROM user use index(login_idx)  WHERE  login LIKE :login");
+        sqlQuery.setParameter("login", login);
+        final List<User> list = sqlQuery.list();
+        System.out.println(list);
     }
 
 }

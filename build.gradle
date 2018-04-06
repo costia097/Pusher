@@ -15,10 +15,9 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: '1.5.10.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '1.5.10.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '1.5.10.RELEASE'
-    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.8-dmr'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '1.5.10.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-activemq', version: '1.5.10.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '1.5.5.RELEASE'
-    compile "org.flywaydb:flyway-core:5.0.7"
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.8-dmr'
     compile group: 'io.vavr', name: 'vavr', version: '0.9.2'
 }

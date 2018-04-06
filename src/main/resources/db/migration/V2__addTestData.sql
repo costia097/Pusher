@@ -7,3 +7,11 @@ INSERT INTO role (role, user_id)
 VALUES ('ADMIN', 1);
 INSERT INTO role (role, user_id)
 VALUES ('ADMIN', 2);
+
+INSERT INTO address (country, locale, address, user_id)
+VALUES ('Ukraine', 'UA', 'none', 1);
+
+INSERT INTO record (value, user_id)
+ VALUES ('Secon', 1);
+INSERT INTO record (value, user_id)
+ VALUES ('First', 1);

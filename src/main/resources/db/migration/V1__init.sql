@@ -26,3 +26,33 @@ CREATE TABLE role
 );
 CREATE INDEX fk_this_users_idx
   ON role (user_id);
+
+CREATE TABLE address
+(
+  id      INT AUTO_INCREMENT
+    PRIMARY KEY,
+  country VARCHAR(45) NOT NULL,
+  locale  VARCHAR(45) NOT NULL,
+  address VARCHAR(45) NOT NULL,
+  user_id INT         NULL,
+  CONSTRAINT fk_address_user
+  FOREIGN KEY (user_id) REFERENCES user (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+CREATE INDEX fk_address_user_idx
+  ON address (user_id);
+
+CREATE TABLE record
+(
+  id      INT AUTO_INCREMENT
+    PRIMARY KEY,
+  value   VARCHAR(45) NOT NULL,
+  user_id INT         NULL,
+  CONSTRAINT fk_record_user
+  FOREIGN KEY (user_id) REFERENCES user (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+CREATE INDEX fk_record_user_idx
+  ON record (user_id);
