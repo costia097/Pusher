@@ -1,6 +1,10 @@
 package main.controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import main.annotations.CheckGood;
+import main.aop.Proxy;
+import main.aop.ProxyInterface;
+import main.aop.Target;
 import main.entities.Role;
 import main.entities.User;
 import main.jms.producers.TestProducer;
@@ -8,6 +12,7 @@ import main.repositories.UserRepository;
 import main.services.SenderResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -26,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.lang.reflect.Proxy.newProxyInstance;
+
 @RestController
 @CheckGood("aaa")
 public class TestController {
@@ -34,11 +41,11 @@ public class TestController {
     @Qualifier("javaMailSenderImpl")
     private JavaMailSenderImpl javaMailSender;
     @Autowired
-    private  SenderResolver senderResolver;
+    private SenderResolver senderResolver;
     @Autowired
-    private  TestProducer testProducer;
+    private TestProducer testProducer;
     @Autowired
-    private  UserRepository userRepository;
+    private UserRepository userRepository;
 
     @GetMapping(value = "/check")
     @PreAuthorize("hasRole('ADMIN')")
@@ -77,22 +84,8 @@ public class TestController {
         testProducer.send();
     }
 
-    @GetMapping("/test1")
-    public void test() {
-        User user = new User();
-        user.setEmail("email@mda.com");
-        user.setLogin("login");
-        user.setPassword("password");
-        user.setName("name");
-        user.setLastName("lastName");
-        user.setActive(true);
-        user.setCreatedAt(new Timestamp(LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli()));
-        List<Role> roles = new ArrayList<>();
-        Role role = new Role();
-        role.setRole(Role.RoleStatus.ADMIN);
-        role.setUser(user);
-        roles.add(role);
-        user.setRoles(roles);
-        userRepository.save(user);
+    public static void main(String[] args) {
+        Target target = new Target();
+        final Object o = newProxyInstance(ClassLoader.getSystemClassLoader(), new Class[]{ProxyInterface.class}, new Proxy());
     }
 }

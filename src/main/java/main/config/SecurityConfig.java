@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/person/confirm/{uuid}").permitAll()
                 .antMatchers("/person/forgotPassword").permitAll()
                 .antMatchers("/person/forgotPassword/update").permitAll()
-                .antMatchers("/test").permitAll()
+                .antMatchers("/test1").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
