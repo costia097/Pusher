@@ -34,6 +34,7 @@ public class CustomAuthProvider implements AuthenticationProvider {
             user.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getRole().toString())));
             return new UsernamePasswordAuthenticationToken(login, password, authorities);
         }
+
         throw new BadCredentialsException("Authentication failed for user: " + login);
     }
 
