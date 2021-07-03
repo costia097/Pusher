@@ -35,7 +35,7 @@ public class EmailServiceTest {
         String subject = "subject";
         String text = "text";
         doNothing().when(senderResolver).resolveSender(any(),any());
-        when(javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
+        when(javaMailSender.createMimeMessage()).thenReturn(null);
         emailService.sendEmailToPerson(to, subject, text);
         verify(javaMailSender).send(mimeMessage);
     }
